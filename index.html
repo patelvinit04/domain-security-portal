@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Domain Security Portal</title>
+</head>
+<body>
+  <h1>Domain Security Portal</h1>
+
+  <p id="status">Checking authentication...</p>
+
+  <script>
+    async function checkAuth() {
+      const res = await fetch('/.auth/me');
+      const data = await res.json();
+
+      if (!data.clientPrincipal) {
+        document.getElementById('status').innerText =
+          'Not authenticated (this should not happen if config is working)';
+        return;
+      }
+
+      document.getElementById('status').innerText =
+        `Authenticated as: ${data.clientPrincipal.userDetails}`;
+    }
+
+    checkAuth();
+  </script>
+</body>
+</html>
